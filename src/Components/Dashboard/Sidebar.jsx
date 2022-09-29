@@ -1,10 +1,14 @@
-import React from "react";
+import TreeView from "./TreeView";
+
 
 const Sidebar = () => {
+
   return (
-    <div className="h-full border-r text-white text-center border-white bg-black">
-      <h2>component 1</h2>
-    </div>
+    <>
+      <TreeView />
+      <TreeView />
+
+    </>
   );
 };
 

@@ -4,47 +4,19 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  Marker
-
+  Marker,
 } from "react-simple-maps";
-import MarkerNode from "./MarkerNode";
 
-
-
-const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
-
-const markers = [
-  {
-    name: "Vandenberg Air Force Base",
-    coordinates: [34.632, -120.610]
-  },
-  { name: "Omelek Island", coordinates: [9.047, 167.74] },
-  { name: "Cape Canaveral", coordinates: [28.561, -80.577] },
-  { name: "Boca Chica Village", coordinates: [25.997, -97.156] },
-  { name: "Cape Canaveral", coordinates: [28.608, -80.603] },
-  { name: "Vandenberg Air Force Base", coordinates: [34.644, -120.593] },
-];
-
-// const offsets = {
-//   VT: [50, -8],
-//   NH: [34, 2],
-//   MA: [30, -1],
-//   RI: [28, 2],
-//   CT: [35, 10],
-//   NJ: [34, 1],
-//   DE: [33, 0],
-//   MD: [47, 10],
-//   DC: [49, 21]
-// };
+const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
 
 const MapChart = ({ mapdata }) => {
   return (
-    <ComposableMap projection="geoAlbersUsa">
+    <ComposableMap projection="geoEqualEarth">
       {console.log(mapdata)}
       <Geographies geography={geoUrl}>
         {({ geographies }) => (
           <>
-            {geographies.map(geo => (
+            {geographies.map((geo) => (
               <Geography
                 key={geo.rsmKey}
                 stroke="#DE3163"
@@ -52,30 +24,23 @@ const MapChart = ({ mapdata }) => {
                 fill="#000"
               />
             ))}
-            {geographies.map(geo => {
-              // const centroid = geoCentroid(geo);
-              // const cur = allStates.find(s => s.val === geo.id);
-              return (
-                <g key={geo.rsmKey + "-name"}>
-
-                </g>
-              );
+            {geographies.map((geo) => {
+              return <g key={geo.rsmKey + "-name"}></g>;
             })}
           </>
         )}
       </Geographies>
-      {markers.map((item) => {
-
-        return (
-          <MarkerNode name={item.name}
-            latitude={item.coordinates[0]}
-            longitude={item.coordinates[1]} />
-        )
-      }
-
-
-      )}
-
+      {mapdata.map(({ name, coordinates }) => (
+        <Marker key={name} coordinates={[coordinates[1], coordinates[0]]}>
+          <circle r={10} fill="#F00" stroke="#fff" strokeWidth={2} />
+          <text
+            textAnchor="middle"
+            style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}
+          >
+            {name}
+          </text>
+        </Marker>
+      ))}
 
     </ComposableMap>
   );
