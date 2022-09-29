@@ -4,7 +4,7 @@ import Navbar from "./Components/Navbar";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App md:max-h-screen md:overflow-hidden">
       <Navbar />
       <Dashboard />
     </div>
